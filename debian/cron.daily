@@ -11,9 +11,14 @@ if [ -x /usr/bin/etckeeper ] && [ -e /etc/etckeeper/etckeeper.conf ]; then
 		if [ ! -e "$lockfile" ]; then
 			AVOID_SPECIAL_FILE_WARNING=1
 			export AVOID_SPECIAL_FILE_WARNING
-			if etckeeper unclean; then
-				etckeeper commit "daily autocommit" >/dev/null
-			fi
+			for ETCKEEPER_DIR in `etckeeper list-managed`; do
+				export ETCKEEPER_DIR
+				if etckeeper unclean; then
+					etckeeper commit "daily autocommit" >/dev/null
+				fi
+			done
 		fi
 	fi
 fi
+
+# vim: ts=4 noexpandtab:

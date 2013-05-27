@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+if [ -n "$MANAGED_DIRS" ]; then
+	for etckeeper_dir in `echo $MANAGED_DIRS | sed 's/:/\n/g'`; do
+		if [ ! -d "$etckeeper_dir" ]; then
+			echo "etckeeper: Configuration error: Directory '$etckeeper_dir' not found" >&2
+			continue
+		fi
+		if [ ! -w "$etckeeper_dir" ]; then
+			echo "etckeeper: Configuration error: Directory '$etckeeper_dir' not accessible" >&2
+			continue
+		fi
+		if [ ! -f "$etckeeper_dir/.etckeeper" ]; then
+			echo "etckeeper: Configuration error: Directory '$etckeeper_dir' not initialized" >&2
+			continue
+		fi
+		echo $etckeeper_dir
+	done
+fi

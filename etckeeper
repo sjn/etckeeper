@@ -54,6 +54,10 @@ fi
 if [ ! -z "$PUSH_REMOTE" ]; then
 	export PUSH_REMOTE
 fi
+if [ ! -z "$MANAGED_DIRS" ]; then
+	export MANAGED_DIRS
+fi
+
 
 if [ -z "$1" ]; then
 	usage
